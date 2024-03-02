@@ -35,7 +35,7 @@ class HomePage extends ConsumerWidget {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
+                              horizontal: 24,
                               vertical: 12,
                             ),
                             child: InkWell(
