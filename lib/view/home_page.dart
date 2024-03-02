@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:location_permission/controller/button_controller.dart';
 import 'package:location_permission/controller/location_provider.dart';
 
 class HomePage extends ConsumerWidget {
@@ -16,56 +17,46 @@ class HomePage extends ConsumerWidget {
           ),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
+          preferredSize: const Size.fromHeight(210),
           child: GridView.builder(
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 500,
               mainAxisExtent: 50,
             ),
+            itemCount: buttonList.length,
             itemBuilder: (context, index) {
-              final data = ref.watch(locationProvider).location[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                child: Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: const Color(0xFFf2f2f2),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Request ${index + 1}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+              return  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    child: InkWell(
+                      onTap: () => buttonList[index].onTap(ref, context),
+                      child: Container(
+                        height: 70,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: buttonList[index].buttonColor,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              buttonList[index].buttonName,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Lat :${data.lat.toString()}",
-                              ),
-                              Text(
-                                "Lng :${data.lon.toString()}",
-                              ),
-                              Text(
-                                "Speed : ${data.speed.toString()}",
-                              )
-                            ],
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                ),
-              );
+                    ),
+                  );
             },
           ),
         ),
