@@ -21,7 +21,7 @@ class Location extends _$Location {
 
   /// Start polling
   Future<void> startLocationPolling() async {
-    /// If any timer already exists, tehn do nothing
+    /// If any timer already exists, then do nothing
     if (state.timer != null) {
       return;
     }
